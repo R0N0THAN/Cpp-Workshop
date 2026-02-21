@@ -1,4 +1,8 @@
 #include "deck.hpp"
+#include "cards.hpp"
+#include <algorithm>
+#include <random>
+#include <chrono>
 
 Deck::Deck() {
     for (int suit = 0; suit < 4; ++suit) {
@@ -9,7 +13,12 @@ Deck::Deck() {
 }
 
 void Deck::shuffle() {
-    random_shuffle(cards.begin(), cards.end());
+    unsigned seed = static_cast<unsigned>(chrono::system_clock::now().time_since_epoch().count());
+    std::shuffle(cards.begin(), cards.end(), default_random_engine(seed));  // std::shuffle is a C++11 algorithm that randomly shuffles the 
+                                                                            // elements in the range [first, last) using a random number generator. 
+                                                                            // The std::shuffle is used instead of just shuffle to avoid confusion 
+                                                                            // with Deck::shuffle() method. The default_random_engine is a random 
+                                                                            // number generator that produces pseudo-random numbers.
 }
 
 Card Deck::dealCard() {
