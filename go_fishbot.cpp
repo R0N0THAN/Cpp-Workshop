@@ -29,7 +29,14 @@ int main() {
         bool playerTurn = true; // For simplicity, player always goes first
         cout << "Player's turn to ask for a card..." << endl;
         while (playerTurn) {
-            cout << "What card would you like to ask for? (e.g., 'A', '2', 'K', etc.): ";
+            string playerHandAsRanks;
+            for (const auto& card : playerHand.getCards()) {
+                playerHandAsRanks += "'";
+                playerHandAsRanks += rankToString(card.getRank());
+                playerHandAsRanks += "', ";
+            }
+            playerHandAsRanks = playerHandAsRanks.substr(0, playerHandAsRanks.size() - 2); // Remove trailing comma and space
+            cout << "What card would you like to ask for? (" << playerHandAsRanks << "): ";
             bool validInput = false;
             string requestedRank;
             do {
