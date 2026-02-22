@@ -27,8 +27,8 @@ int main() {
 
     while (playerHand.getHandSize() > 0 && opponentHand.getHandSize() > 0) {
         bool playerTurn = true; // For simplicity, player always goes first
+        cout << "Player's turn to ask for a card..." << endl;
         while (playerTurn) {
-            cout << "Player's turn to ask for a card..." << endl;
             cout << "What card would you like to ask for? (e.g., 'A', '2', 'K', etc.): ";
             bool validInput = false;
             string requestedRank;
@@ -66,7 +66,9 @@ int main() {
                 cout << "Go Fish! Drawing a card from the deck..." << endl;
                 playerTurn = false; // End player's turn
                 if (!deck.isEmpty()) {
-                    playerHand.addCard(deck.dealCard());
+                    Card drawnCard = deck.dealCard();
+                    cout << "You drew: " << drawnCard.toString() << endl;
+                    playerHand.addCard(drawnCard);
                 } else {
                     cout << "Deck is empty!" << endl;
                 }
@@ -78,13 +80,16 @@ int main() {
             cout << "Opponent's Pairs: " << opponentHand.pairsToString() << endl;
         }
 
+        cout << endl;
+        cout << "-----------------------------------" << endl << endl;
+        cout << "Opponent's turn to ask for a card..." << endl;
+
         // Opponent's turn (simple random choice for demonstration)
         while (!playerTurn) {
-            cout << "Opponent's turn to ask for a card..." << endl;
             if (opponentHand.getHandSize() > 0) {
                 random_device rd;
                 mt19937 gen(rd());
-                uniform_int_distribution<> dis(0, playerHand.getHandSize() - 1);
+                uniform_int_distribution<> dis(0, opponentHand.getHandSize() - 1);
                 int randomIndex = dis(gen);
                 Card requestedCard = opponentHand.getCards()[static_cast<size_t>(randomIndex)];
                 string requestedRank = rankToString(requestedCard.getRank());
@@ -112,6 +117,7 @@ int main() {
                 }
             } else {
                 cout << "Opponent has no cards left to ask with!" << endl;
+                playerTurn = true; // End opponent's turn
             }
             cout << "Player's Hand: " << playerHand.toString() << endl;
             cout << "Player's Pairs: " << playerHand.pairsToString() << endl;
@@ -119,6 +125,8 @@ int main() {
             //cout << "Opponent's Hand: " << opponentHand.toString() << endl; // to be hidden in actual game
             cout << "Opponent's Pairs: " << opponentHand.pairsToString() << endl;
         }
+
+        cout << "-----------------------------------" << endl << endl;
     }
 
     // Determine winner
