@@ -1,6 +1,9 @@
 #include "player.h"
 #include "deck.h"
 #include <iostream> // For input/output operations
+#include <chrono> // For seeding random number generator
+#include <random> // For random number generation
+#define DEAL_CARDS 7
 
 using namespace std;
 
@@ -8,12 +11,11 @@ bool playerTurn(Player& currentPlayer, Player& otherPlayer, Deck& deck, bool isB
 
 int main() {
     Deck deck;
-    deck.initialize();
     deck.shuffle();
 
     Player player1, player2;
     // Deal 7 cards to each player
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < DEAL_CARDS; i++) {
         player1.receiveCard(deck.dealCard());
         player2.receiveCard(deck.dealCard());
     }
@@ -49,10 +51,17 @@ bool playerTurn(Player& currentPlayer, Player& otherPlayer, Deck& deck, bool isB
     if (isBot) {
         // Generate random rank to request
         vector<char> ranks = currentPlayer.getHandRanks();
-        requestedRank = ranks[static_cast<size_t>(rand()) % ranks.size()];
+
+        // Use random_device and mt19937 for better randomness
+        random_device rd;
+        mt19937 gen(rd());
+        uniform_int_distribution<size_t> dis(0, ranks.size() - 1);
+
+        requestedRank = ranks[dis(gen)];
+
     } else { // Human player turn
         cout << "Your hand: " << currentPlayer.handToString() << endl;
-        cout << "Opponent's hand: " << otherPlayer.handToString() << endl; // for debugging purposes, can be removed in final version
+        // cout << "Opponent's hand: " << otherPlayer.handToString() << endl; // for debugging purposes, can be removed in final version
         cout << "Your pairs: " << currentPlayer.pairsToString() << endl << endl;
         cout << "Opponent's pairs: " << otherPlayer.pairsToString() << endl << endl; 
         bool validInput = false;
@@ -85,7 +94,7 @@ bool playerTurn(Player& currentPlayer, Player& otherPlayer, Deck& deck, bool isB
             Card receivedCard = deck.dealCard();
             currentPlayer.receiveCard(receivedCard);
             if (!isBot) {
-                cout << "You drew: " << rankToChar(receivedCard.rank) << receivedCard.suit << endl;
+                cout << "You drew: " << rankToChar(receivedCard.rank) << suitToChar(receivedCard.suit) << endl;
             }
         } else {
             cout << "Deck is empty, no card drawn." << endl;

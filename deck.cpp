@@ -14,11 +14,20 @@ char rankToChar(int rank) {
     return static_cast<char>('0' + rank); // Convert 2-10 to characters
 }
 
-void Deck::initialize() {
+char suitToChar(Suit suit) {
+    switch (suit) {
+        case Suit::Hearts: return 'H';
+        case Suit::Diamonds: return 'D';
+        case Suit::Clubs: return 'C';
+        case Suit::Spades: return 'S';
+        default: return '?'; // Should never happen
+    }
+}
+
+Deck::Deck() {
     cards.clear();
-    char suits[] = {'H', 'D', 'C', 'S'};
-    for (char suit : suits) {
-        for (int rank = 1; rank <= 13; rank++) {
+    for (Suit suit : all_suits) {
+        for (int rank = 1; rank <= RANKS; rank++) {
             cards.push_back({rank, suit});
         }
     }

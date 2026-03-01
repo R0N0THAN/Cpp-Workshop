@@ -22,7 +22,7 @@ string Player::handToString() {
     string result;
     for (Card card : hand) {
         result += rankToChar(card.rank);
-        result += card.suit;
+        result += suitToChar(card.suit);
         result += " ";
     }
     return result;
@@ -33,9 +33,9 @@ string Player::pairsToString() {
     for (Pair pair : pairs) {
         result += rankToChar(pair.card1.rank);
         result += "'s: ";
-        result += pair.card1.suit;
+        result += suitToChar(pair.card1.suit);
         result += " & ";
-        result += pair.card2.suit;
+        result += suitToChar(pair.card2.suit);
         result += ", ";
     }
 

@@ -4,7 +4,6 @@
 #include "deck.h"
 #include <vector>
 #include <string>
-using namespace std;
 
 struct Pair {
     Card card1;
@@ -15,8 +14,8 @@ class Player {
 
 private:
 
-    vector<Card> hand;
-    vector<Pair> pairs;
+    std::vector<Card> hand;
+    std::vector<Pair> pairs;
 
     void checkForPairs();
 
@@ -24,11 +23,11 @@ public:
 
     void receiveCard(Card card);
     bool requestCard(Player& otherPlayer, char rank);
-    string handToString();
-    string pairsToString();
+    std::string handToString();
+    std::string pairsToString();
     int getPairCount();
     int getHandSize();
-    vector<char> getHandRanks();
+    std::vector<char> getHandRanks();
 
     
 };
