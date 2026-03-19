@@ -12,7 +12,7 @@ enum class Suit {
     Spades
 };
 
-static constexpr std::array<Suit, 4> all_suits = {
+static constexpr std::array<Suit, SUITS> all_suits = {
     Suit::Hearts, Suit::Diamonds, Suit::Clubs, Suit::Spades 
 };
 
