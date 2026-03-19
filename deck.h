@@ -25,14 +25,6 @@ char rankToChar(int rank);
 
 char suitToChar(Suit suit);
 
-// struct Deck {
-//     vector<Card> cards;
-//     void initialize();
-//     void shuffle();
-//     Card dealCard();
-//     bool isEmpty();
-// };
-
 class Deck {
 
 private:

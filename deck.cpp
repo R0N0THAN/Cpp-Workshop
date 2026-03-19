@@ -11,7 +11,7 @@ char rankToChar(int rank) {
     if (rank == 11) return 'J';
     if (rank == 12) return 'Q';
     if (rank == 13) return 'K';
-    return static_cast<char>('0' + rank); // Convert 2-10 to characters
+    return static_cast<char>('0' + rank); // Convert 2-9 to characters
 }
 
 char suitToChar(Suit suit) {
